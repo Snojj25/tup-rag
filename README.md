@@ -4,16 +4,30 @@ An implementation and comparison of different vector databases for retrieval-aug
 
 ## Chroma
 
+### Pull the Docker container
+
+```sh
+docker pull chromadb/chroma
+```
+
+### Start/stop the Docker container
+
+```sh
+docker run -p 8000:8000 chromadb/chroma
+```
+
+---
+
 ## Milvus
 
 ### Start/stop the Docker container
 
 ```sh
-bash standalone_embed.sh start
+bash milvus_docker.sh start
 
-bash standalone_embed.sh stop
+bash milvus_docker.sh stop
 
-bash standalone_embed.sh delete
+bash milvus_docker.sh delete
 
-bash standalone_embed.sh upgrade
+bash milvus_docker.sh upgrade
 ```

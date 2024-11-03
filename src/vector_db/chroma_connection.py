@@ -2,6 +2,8 @@
 from chromadb import HttpClient, Documents, EmbeddingFunction, Embeddings
 import uuid
 
+from utils.embedder import embedd_sequences
+
 chroma_client = HttpClient(host="localhost", port=8000)
 chroma_client.heartbeat()
 
@@ -16,7 +18,7 @@ class MyEmbeddingFunction(EmbeddingFunction):
         return self.emb_func(input)
 
 
-def get_collection(collection_name, embedding_func=None):
+def _get_collection(collection_name, embedding_func=embedd_sequences):
 
     if embedding_func:
         my_embedding_function = MyEmbeddingFunction(embedding_func)
@@ -30,18 +32,22 @@ def get_collection(collection_name, embedding_func=None):
     return collection
 
 
-def insert_documents(collection_name, documents, embedding_func=None):
+def insert_documents_chroma(
+    collection_name, documents, embedding_func=embedd_sequences
+):
 
-    collection = get_collection(collection_name, embedding_func)
+    collection = _get_collection(collection_name, embedding_func)
 
-    ids = generate_uuid_ids(len(documents))
+    ids = _generate_uuid_ids(len(documents))
 
     collection.upsert(documents=documents, ids=ids)
 
 
-def get_documents(collection_name, query, top_k=1, embedding_func=None):
+def get_documents_chroma(
+    collection_name, query, top_k=1, embedding_func=embedd_sequences
+):
 
-    collection = get_collection(collection_name, embedding_func)
+    collection = _get_collection(collection_name, embedding_func)
 
     results = collection.query(
         query_texts=[query],
@@ -51,38 +57,26 @@ def get_documents(collection_name, query, top_k=1, embedding_func=None):
     return results
 
 
-def generate_uuid_ids(n):
+def _generate_uuid_ids(n):
     """Generate array of n UUID-based IDs"""
     return [str(uuid.uuid4()) for _ in range(n)]
 
 
 if __name__ == "__main__":
 
-    documents = [
-        "Polar bears are very dangerous",
-        "Polar bears kill and eat seals and penguins",
-        "You should not approach a polar bear in the wild",
-    ]
+    # documents = [
+    #     "Polar bears are very dangerous",
+    #     "Polar bears kill and eat seals and penguins",
+    #     "You should not approach a polar bear in the wild",
+    # ]
 
-    # insert_documents("polar_bears", documents)
+    # insert_documents_chroma("polar_bears", documents)
 
-    # results = get_documents("polar_bears", "food", top_k=2)
+    # results = get_documents_chroma("polar_bears", "food", top_k=2)
 
     # print(results["documents"])
 
-    # collection = get_collection("polar_bears")
+    # collection = _get_collection("polar_bears")
     # print(collection.peek(15)["documents"])
 
-
-# # switch `add` to `upsert` to avoid adding the same documents every time
-# print(collection.peek())
-
-chroma_client.delete_collection(name="polar_bears")
-
-
-# # collection.add(
-# #     documents=["pineapples are yellow", "oranges are orange", "Apples are red"],
-# #     ids=["id4", "id5", "id6"],
-# # )
-
-# print(results)
+    chroma_client.delete_collection(name="test_rag")

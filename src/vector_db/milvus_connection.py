@@ -129,31 +129,31 @@ class SimpleVectorDB:
         connections.disconnect("default")
 
 
-# Example usage
-if __name__ == "__main__":
-    # Initialize the vector database
-    db = SimpleVectorDB()
+# # Example usage
+# if __name__ == "__main__":
+#     # Initialize the vector database
+#     db = SimpleVectorDB()
 
-    # Create some random vectors and metadata
-    num_vectors = 1000
-    vectors = np.random.random((num_vectors, 128)).astype(
-        np.float32
-    )  # Ensure float32 type
-    metadata = [f"Vector_{i}" for i in range(num_vectors)]
+#     # Create some random vectors and metadata
+#     num_vectors = 1000
+#     vectors = np.random.random((num_vectors, 128)).astype(
+#         np.float32
+#     )  # Ensure float32 type
+#     metadata = [f"Vector_{i}" for i in range(num_vectors)]
 
-    # Insert vectors
-    db.insert(vectors, metadata)
-    print(f"Inserted {num_vectors} vectors")
+#     # Insert vectors
+#     db.insert(vectors, metadata)
+#     print(f"Inserted {num_vectors} vectors")
 
-    # Perform a search
-    query = np.random.random(128).astype(np.float32)  # Ensure float32 type
-    results = db.search(query, top_k=5)
+#     # Perform a search
+#     query = np.random.random(128).astype(np.float32)  # Ensure float32 type
+#     results = db.search(query, top_k=5)
 
-    print("\nSearch results:")
-    for result in results:
-        print(
-            f"ID: {result['id']}, Distance: {result['distance']}, Metadata: {result['metadata']}"
-        )
+#     print("\nSearch results:")
+#     for result in results:
+#         print(
+#             f"ID: {result['id']}, Distance: {result['distance']}, Metadata: {result['metadata']}"
+#         )
 
-    # Close connection
-    db.close()
+#     # Close connection
+#     db.close()

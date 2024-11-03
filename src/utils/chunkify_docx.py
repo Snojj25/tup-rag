@@ -89,7 +89,7 @@ class DocxChunker:
 # # Usage example
 # def main():
 #     chunker = DocxChunker(chunk_size=1000, chunk_overlap=200)
-#     chunks = chunker.process_docx("media/ustava.docx")
+#     chunks = chunker.process_docx("media/Constitution.docx")
 
 #     # Print chunks and their sizes
 #     for i, chunk in enumerate(chunks):
