@@ -45,7 +45,7 @@ def embedd_sequences(sequences) -> torch.Tensor:
     sentence_embeddings = F.normalize(sentence_embeddings, p=2, dim=1)
 
     # If you need the embeddings on CPU for further processing, uncomment the following line:
-    sentence_embeddings = sentence_embeddings.cpu()
+    sentence_embeddings = sentence_embeddings.cpu().numpy().tolist()
 
     return sentence_embeddings
 

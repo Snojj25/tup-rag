@@ -1,2 +1,4 @@
 venv
-volumes
+volumes/
+volumes/milvus/
+.codegpt
