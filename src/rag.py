@@ -11,7 +11,11 @@ from inference import (
 from utils.chunkify_docx import DocxChunker
 from utils.db_types import VectorDBType
 from utils.embedder import embedd_sequences
-from vector_db.chroma_connection import insert_documents_chroma, get_documents_chroma
+from vector_db.chroma_connection import (
+    insert_documents_chroma,
+    get_documents_chroma,
+    delete_collection_chroma,
+)
 
 # from utils import DocxChunker, VectorDBType, embedd_sequences ??? Can we do this?
 from vector_db.milvus_connection import SimpleVectorDB

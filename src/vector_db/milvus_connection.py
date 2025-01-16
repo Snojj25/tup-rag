@@ -65,8 +65,8 @@ class SimpleVectorDB:
 
         # Prepare data for insertion
         data = [
-            {"vector": vec, "metadata": meta}
-            for vec, meta in zip(vectors, metadata_list)
+            {"vector": vec, "metadata": idx, "data": data}
+            for idx, (vec, data) in enumerate(zip(vectors, metadata_list))
         ]
 
         # Insert the data
@@ -98,7 +98,7 @@ class SimpleVectorDB:
             anns_field="vector",
             param=search_params,
             limit=top_k,
-            output_fields=["metadata"],
+            output_fields=["data"],
         )
 
         # Format results
@@ -109,7 +109,7 @@ class SimpleVectorDB:
                     {
                         "id": hit.id,
                         "distance": hit.distance,
-                        "metadata": hit.entity.get("metadata"),
+                        "data": hit.entity.get("data"),
                     }
                 )
 
@@ -123,6 +123,10 @@ class SimpleVectorDB:
     def count(self):
         """Return the number of vectors in the database."""
         return self.collection.num_entities
+
+    def delete(self):
+        """Delete the collection."""
+        self.collection.drop()
 
     def close(self):
         """Close the connection to Milvus server."""

@@ -56,6 +56,10 @@ def get_documents_chroma(collection, query_texts=None, query_embeddings=None, to
     return results
 
 
+def delete_collection_chroma(collection_name):
+    chroma_client.delete_collection(name=collection_name)
+
+
 def _generate_uuid_ids(n):
     """Generate array of n UUID-based IDs"""
     return [str(uuid.uuid4()) for _ in range(n)]
@@ -132,3 +136,6 @@ import numpy as np
 #     # # print(collection.peek(15)["documents"])
 
 #     # chroma_client.delete_collection(name="polar_bears")
+
+
+delete_collection_chroma("test_rag")
